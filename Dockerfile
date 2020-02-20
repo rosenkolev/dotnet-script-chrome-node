@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-alpine
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
 
 # Install dotnet-script
 RUN dotnet tool install dotnet-script --tool-path /usr/bin
@@ -23,7 +23,7 @@ RUN apk add --no-cache tini@edge make@edge gcc@edge g++@edge python@edge git@edg
     /usr/share/man \
     /tmp/*
 
-# Install sonarscanner and jre
+# Install sonarscanner and jdk
 RUN dotnet tool install dotnet-sonarscanner --tool-path /usr/bin
 RUN apk add --no-cache openjdk11
 
