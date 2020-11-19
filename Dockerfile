@@ -1,7 +1,9 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine
 
 # Install dotnet-script
-RUN dotnet tool install dotnet-script --tool-path /usr/bin
+RUN dotnet tool install dotnet-script --tool-path /usr/share/dotnet-script \
+    && ln -s /usr/share/dotnet-script/dotnet-script /usr/bin/dotnet-script \
+    && chmod 755 /usr/share/dotnet-script/dotnet-script
 
 # Installs latest Chromium package.
 RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
@@ -16,7 +18,7 @@ RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repos
     && mkdir /var/cache/apk
 
 # Install nodejs
-RUN apk add --no-cache tini@edge make@edge gcc@edge g++@edge python@edge git@edge nodejs@edge nodejs-npm@edge yarn@edge libuv@edge \
+RUN apk add --no-cache tini@edge make@edge gcc@edge g++@edge git@edge nodejs@edge nodejs-npm@edge yarn@edge libuv@edge \
     && apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing wqy-zenhei \
 	&& rm -rf /var/lib/apt/lists/* \
     /var/cache/apk/* \
